@@ -30,6 +30,10 @@ function loadURL(filename, callback)
       aXMLHttpRequest.onreadystatechange = function (aEvt) {
         if(aXMLHttpRequest.readyState == 4){
         allData = aXMLHttpRequest.responseText;
+        if(allData === "noauth"){
+          alert("Your session has expired. Relogin to continue.")
+          window.location.reload();
+        }
         callback(allData)
         }
       };
@@ -40,4 +44,3 @@ function loadURL(filename, callback)
         alert("A problem occurred instantiating the XMLHttpRequest object.");
     }
 }
-
