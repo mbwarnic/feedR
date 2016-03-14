@@ -3,14 +3,40 @@
 <head>
     <title> Simple JS Eval</title>
     <script src='script.js'> </script>
-    <script src='jquery-2.2.1.min.js'> </script>
+    <script src='jquery-2.2.1.js'> </script>
     <script src='ply.js'> </script>
     <link rel="stylesheet" type="text/css" href="ply.css">
+
+    <script src='offline-master\offline-master\js\offline.js'> </script>
+    <link rel="stylesheet" type="text/css" href="offline-master\offline-master\themes\offline-theme-dark.css">
+
+    <script src='offlinejs-simulate-ui-master\offlinejs-simulate-ui-master\js\simulate-ui.js'> </script>
+    <link rel="stylesheet" type="text/css" href="offlinejs-simulate-ui-master\offlinejs-simulate-ui-master\css\styles.css">
+    
+    
     
 
     <script>
-        var showLoginModal = function()
-        {
+        $(function () {
+
+            var
+                $online = $('.online'),
+                $offline = $('.offline');
+
+            Offline.on('confirmed-down', function () {
+                $online.fadeOut(function () {
+                    $offline.fadeIn();
+                });
+            });
+
+            Offline.on('confirmed-up', function () {
+                $offline.fadeOut(function () {
+                    $online.fadeIn();
+                });
+            });
+
+        });
+        var showLoginModal = function () {
             Ply.factory('login', function (options, data, resolve) {
                 options.flags = {
                     closeBtn: false,
@@ -18,13 +44,11 @@
                     closeByOverlay: true,
                     visibleOverlayInStack: true
                 };
-
                 options.onaction = function (ui) {
                     var data = ui.data;
-                    console.log.ur.data;
+                    console.log(ui.data);
 
                 };
-
                 // Use base factory
                 Ply.factory.use('base', options, {
                     title: 'Login',
@@ -36,13 +60,9 @@
                     cancel: false
                 }, resolve);
             });
-
-
-            // app.js
             Ply.dialog('login').done(function (ui) {
-                Ply.dialog('alert', 'Bingo!');
+                Ply.dialog('alert', 'Access Granted'); loadMySubs();
             });
-
         }
 
         var theUser = "test";
