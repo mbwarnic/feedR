@@ -44,3 +44,4 @@ function loadURL(filename, callback)
         alert("A problem occurred instantiating the XMLHttpRequest object.");
     }
 }
+
